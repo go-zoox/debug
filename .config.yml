@@ -1,0 +1,21 @@
+version: "1.0.0"
+
+server:
+  ports:
+    - 8080
+    - 9090
+  cleanup: 1h
+
+logger:
+  level: "warn"
+  trace: false
+
+rules:
+  - host: backend-a.example.com
+    backend:
+      service_name: backend-a
+      service_port: 80
+  - host: backend-b.example.com
+    backend:
+      service_name: backend-b
+      service_port: 8080
