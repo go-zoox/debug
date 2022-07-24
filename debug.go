@@ -6,24 +6,61 @@ import (
 	"github.com/go-zoox/core-utils/fmt"
 )
 
-// EnvKey is the key of environment vars for DEBUG
-const EnvKey = "DEBUG"
+// Debugger is a interface for debug
+type Debugger interface {
+	IsDebugMode() bool
+	Debug(args ...interface{})
+	Info(args ...interface{})
+	//
+	// SetEnvKey(envKey string)
+	SetLogger(func(args ...interface{}) error)
+}
+
+type debugger struct {
+	envKey string
+	logger func(args ...interface{}) error
+}
+
+// New returns a new Debugger
+func New(envKey string, logger ...func(args ...interface{}) error) Debugger {
+	loggerX := fmt.PrintJSON
+	if len(logger) > 0 {
+		loggerX = logger[0]
+	}
+
+	return &debugger{
+		envKey: envKey,
+		logger: loggerX,
+	}
+}
 
 // IsDebugMode check is now in debug mode
-func IsDebugMode() bool {
-	return os.Getenv(EnvKey) != ""
+func (d *debugger) IsDebugMode() bool {
+	return os.Getenv(d.envKey) != ""
 }
 
 // Debug prints debug message if it is in debug mode
-func Debug(args ...interface{}) {
+func (*debugger) Debug(args ...interface{}) {
 	Info(args...)
 }
 
 // Info prints debug message if it is in debug mode
-func Info(args ...interface{}) {
+func (d *debugger) Info(args ...interface{}) {
 	if !IsDebugMode() {
 		return
 	}
 
-	fmt.PrintJSON("[debug]", args)
+	argsx := append([]interface{}{"[debug]"}, args...)
+
+	d.logger(argsx...)
+}
+
+// // SetEnvKey is the key of environment vars for DEBUG
+// func (d *debugger) SetEnvKey(envKey string) {
+// 	d.envKey = envKey
+// }
+
+// SetLogger sets the logger
+func (d *debugger) SetLogger(logger func(args ...interface{}) error) {
+	d.logger = logger
 }
