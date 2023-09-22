@@ -8,7 +8,8 @@ import (
 
 // Debugger is a interface for debug
 type Debugger interface {
-	IsDebugMode() bool
+	IsDebugMode(compare ...func(envValue string) bool) bool
+	//
 	Debug(args ...interface{})
 	Info(args ...interface{})
 	//
@@ -35,7 +36,11 @@ func New(envKey string, logger ...func(args ...interface{}) error) Debugger {
 }
 
 // IsDebugMode check is now in debug mode
-func (d *debugger) IsDebugMode() bool {
+func (d *debugger) IsDebugMode(compare ...func(envValue string) bool) bool {
+	if len(compare) > 0 && compare[0] != nil {
+		return compare[0](os.Getenv(d.envKey))
+	}
+
 	return os.Getenv(d.envKey) != ""
 }
 
