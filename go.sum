@@ -1,2 +1,4 @@
 github.com/go-zoox/core-utils v1.0.12 h1:wyWu7j6xyrTfOTD8eJxFj3on826d63NaD3hKYKI9+sw=
 github.com/go-zoox/core-utils v1.0.12/go.mod h1:EknM3KLL6/kagL95wZbWE7mRRcYCG/fHqiJ/EH0ihAs=
+github.com/go-zoox/core-utils v1.3.6 h1:p7d3BenyLr/SN4J3L+tr1zdSSChQt3CM9iCHgM0MdGc=
+github.com/go-zoox/core-utils v1.3.6/go.mod h1:raOOwr2l2sJQyjR0Dg33sg0ry4U1/L2eNTuLFRpUXWs=
