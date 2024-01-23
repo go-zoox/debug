@@ -41,7 +41,7 @@ func (d *debugger) IsDebugMode(compare ...func(envValue string) bool) bool {
 		return compare[0](os.Getenv(d.envKey))
 	}
 
-	return os.Getenv(d.envKey) != ""
+	return os.Getenv(d.envKey) == "debug"
 }
 
 // Debug prints debug message if it is in debug mode
@@ -55,9 +55,7 @@ func (d *debugger) Info(args ...interface{}) {
 		return
 	}
 
-	argsx := append([]interface{}{"[debug]"}, args...)
-
-	d.logger(argsx...)
+	d.logger(args...)
 }
 
 // // SetEnvKey is the key of environment vars for DEBUG

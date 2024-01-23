@@ -7,7 +7,7 @@ import (
 )
 
 // EnvKey is the key of environment vars for DEBUG
-var EnvKey = "DEBUG"
+var EnvKey = "LOG_LEVEL"
 
 // IsDebugMode check is now in debug mode
 func IsDebugMode() bool {
